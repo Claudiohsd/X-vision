@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package xtravision;
+package Controllers;
 
 import Views.Welcome;
 
@@ -11,7 +11,7 @@ import Views.Welcome;
  *
  * @author claudiodionisio
  */
-public class XtraVision {
+public class MainController {
 
     /**
      * @param args the command line arguments

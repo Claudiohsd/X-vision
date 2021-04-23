@@ -5,20 +5,30 @@
  */
 package Views;
 
+import Controllers.Controller;
+import java.awt.event.ActionListener;
+
 /**
  *
  * @author claudiodionisio
  */
 public class Welcome extends javax.swing.JFrame {
+    
+    Controller controller;
 
     /**
      * Creates new form NewJFrame
      */
-    public Welcome() {
+    public Welcome(Controller controller) {
+        
+        this.controller = controller;
         initComponents();
         this.setVisible(rootPaneCheckingEnabled);
+        //this.setLocationRelativeTo(null);
         
     }
+    
+
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -126,17 +136,14 @@ public class Welcome extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-
+   
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jButton2ActionPerformed
-
+        controller.returnMovie();    }//GEN-LAST:event_jButton2ActionPerformed
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jButton1ActionPerformed
-
+        controller.rentMovie();    }//GEN-LAST:event_jButton1ActionPerformed
+    
     /**
-     * @param args the command line arguments
+     * @param args the command line arguments 
      */
 //    public static void main(String args[]) {
 //        /* Set the Nimbus look and feel */

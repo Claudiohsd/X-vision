@@ -3,22 +3,20 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package Controllers;
+package Main;
 
-import Views.Welcome;
+import Controllers.Controller;
+import java.io.IOException;
 
 /**
  *
  * @author claudiodionisio
  */
-public class MainController {
-
-    /**
-     * @param args the command line arguments
-     */
-    public static void main(String[] args) {
+public class XtraVision {
+    
+    public static void main(String[] args) throws IOException {
         // TODO code application logic here
-        Welcome welcome = new Welcome();
+        Controller controller = new Controller();
         
     }
     

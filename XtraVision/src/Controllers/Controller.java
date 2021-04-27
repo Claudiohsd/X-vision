@@ -10,13 +10,14 @@ import Views.Rent;
 import Views.Return;
 import Views.Welcome;
 import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.io.IOException;
 
 /**
  *
  * @author claudiodionisio
  */
-public class Controller {
+public class Controller implements ActionListener {
     
     private Welcome welcome;
     private Model1 model1;
@@ -31,19 +32,18 @@ public class Controller {
 
     }
     // calls the page rentMovie
-    public void rentMovie() {
+    private void rentMovie() {
         welcome.dispose();
         rent = new Rent(this);
 
     }
     
-    public void returnMovie() {
+    private void returnMovie() {
         welcome.dispose();
         returnMovie = new Return(this);
 
-    }
-    
-    //override methods   
+    }//override methods   
+    @Override
     public void actionPerformed(ActionEvent e) {
 
 //       
@@ -52,12 +52,14 @@ public class Controller {
         System.out.println(button);
         switch (button) {   //start page command
             //checks credential
-            case "jButton2": {
-                rentMovie();
+            case "RENT A MOVIE": {
+               rentMovie();
+            }
+            break;
+            case "RETURN A MOVIE": {
+               returnMovie();
             }
             break;
         }
     }
-    
-    
 }

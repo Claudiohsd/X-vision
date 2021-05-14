@@ -6,7 +6,8 @@
 package Views;
 
 import Controllers.Controller;
-import Models.Model1;
+import Models.Model;
+import Objects.Movie;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
 import javax.swing.DefaultComboBoxModel;
@@ -34,15 +35,16 @@ public class Rent extends javax.swing.JFrame {
     // End of variables declaration        
 
     private final Controller controller;
-    Model1 model;
+    private Model model;
+    private Movie movie;
 
     /**
      * Creates new form Rent
      */
     public Rent(Controller controller) {
         this.controller = controller;
-        this.model = new Model1();
-        this.setVisible(rootPaneCheckingEnabled);
+        this.model = new Model();
+        this.setVisible(true);
         initComponents();
     }
                         
@@ -70,7 +72,7 @@ public class Rent extends javax.swing.JFrame {
         jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(model.searchGenre()));
 
         jLabel2.setText("Choose a Title:");
-
+        jComboBox2.addItemListener(listener);
         jComboBox2.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
 
         jTextArea1.setColumns(20);
@@ -87,6 +89,7 @@ public class Rent extends javax.swing.JFrame {
 
         jButton2.setText("RENT MOVIE");
         jButton2.addActionListener(controller);
+        jButton2.setVisible(false);
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -182,8 +185,12 @@ public class Rent extends javax.swing.JFrame {
             
     }// </editor-fold>      
     
-    public void populateJCB2() {
-        jComboBox2.setModel(new DefaultComboBoxModel<>(model.searchGenre()));
+    private void populateJCB2() {
+        jComboBox2.setModel(new DefaultComboBoxModel<>(model.searchTitle(selected)));
+    }
+    
+    public Movie getMovie(){
+        return movie;
     }
        
     ItemListener listener = (e) -> {
@@ -199,10 +206,14 @@ public class Rent extends javax.swing.JFrame {
                 if (jComboBox2.getSelectedIndex() != 0) {
                     selected = jComboBox2.getSelectedItem().toString();
                     this.jButton2.setVisible(true);
+                    this.jTextArea1.setText(model.description(selected));
+                    movie = model.setMovie(selected);
 
                 }
 
             }
         }
     };
+
+   
 }

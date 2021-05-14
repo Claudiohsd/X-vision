@@ -12,16 +12,9 @@ package Objects;
 public class Movie {
     
     //variables
-    private int MovieID, Amount;
+    private int MovieID;
     private String MovieName, Genre;
-    
-    //constructor
-    public Movie(int MovieID, int Amount, String MovieName, String Genre) {
-        this.MovieID = MovieID;
-        this.Amount = Amount;
-        this.MovieName = MovieName;
-        this.Genre = Genre;
-    }
+    private double Price;
 
     //getters and setters
     public int getMovieID() {
@@ -30,14 +23,6 @@ public class Movie {
 
     public void setMovieID(int MovieID) {
         this.MovieID = MovieID;
-    }
-
-    public int getAmount() {
-        return Amount;
-    }
-
-    public void setAmount(int Amount) {
-        this.Amount = Amount;
     }
 
     public String getMovieName() {
@@ -54,6 +39,14 @@ public class Movie {
 
     public void setGenre(String Genre) {
         this.Genre = Genre;
+    }
+
+    public double getPrice() {
+        return Price;
+    }
+
+    public void setPrice(double Price) {
+        this.Price = Price;
     }
    
    

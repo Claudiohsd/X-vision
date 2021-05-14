@@ -5,7 +5,9 @@
  */
 package Controllers;
 
-import Models.Model1;
+import Models.Model;
+import Objects.Movie;
+import Views.Checkout;
 import Views.Rent;
 import Views.Return;
 import Views.Welcome;
@@ -20,15 +22,18 @@ import java.io.IOException;
 public class Controller implements ActionListener {
     
     private Welcome welcome;
-    private Model1 model1;
+    private Model model1;
     private String button;
     private Rent rent;
     private Return returnMovie;
+    private Checkout checkout;
+    private Movie movie;
 
     public Controller() throws IOException {
         //initialize the variables
         this.welcome = new Welcome(this);
-        this.model1 = new Model1();
+        this.model1 = new Model();
+        
 
     }
     // calls the page rentMovie
@@ -38,11 +43,24 @@ public class Controller implements ActionListener {
 
     }
     
+    private void rent() {
+        rent.dispose();
+        movie = rent.getMovie();
+        checkout = new Checkout(this);
+
+    }
+    
     private void returnMovie() {
         welcome.dispose();
         returnMovie = new Return(this);
 
-    }//override methods   
+    } 
+    public Movie getMovie(){
+        
+        return movie;
+    
+    }
+    //override methods   
     @Override
     public void actionPerformed(ActionEvent e) {
 
@@ -56,6 +74,10 @@ public class Controller implements ActionListener {
                rentMovie();
             }
             break;
+            case "RENT MOVIE": {
+               rent();
+            }
+            break;
             case "RETURN A MOVIE": {
                returnMovie();
             }
@@ -66,4 +88,6 @@ public class Controller implements ActionListener {
             break;
         }
     }
+
+   
 }

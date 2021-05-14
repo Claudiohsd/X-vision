@@ -56,13 +56,10 @@ public class Return extends javax.swing.JFrame {
         });
 
         jButton1.setText("Cancel");
+        jButton1.addActionListener(controller);
 
         jButton2.setText("Confirm");
-        jButton2.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton2ActionPerformed(evt);
-            }
-        });
+        jButton2.addActionListener(controller);
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -99,6 +96,7 @@ public class Return extends javax.swing.JFrame {
         jLabel2.setText("Confirmation details and price paid ");
 
         jButton3.setText("Finish");
+        jButton3.addActionListener(controller);
 
         jLabel3.setText("Insert the case and press finish");
 

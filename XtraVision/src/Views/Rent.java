@@ -6,6 +6,10 @@
 package Views;
 
 import Controllers.Controller;
+import Models.Model1;
+import java.awt.event.ItemEvent;
+import java.awt.event.ItemListener;
+import javax.swing.DefaultComboBoxModel;
 
 /**
  *
@@ -26,15 +30,18 @@ public class Rent extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel2;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTextArea jTextArea1;
+    private String selected;
     // End of variables declaration        
 
     private final Controller controller;
+    Model1 model;
 
     /**
      * Creates new form Rent
      */
     public Rent(Controller controller) {
         this.controller = controller;
+        this.model = new Model1();
         this.setVisible(rootPaneCheckingEnabled);
         initComponents();
     }
@@ -58,7 +65,9 @@ public class Rent extends javax.swing.JFrame {
 
         jLabel1.setText("Please choose a genre:");
 
-        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+//        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        jComboBox1.addItemListener(listener);
+        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(model.searchGenre()));
 
         jLabel2.setText("Choose a Title:");
 
@@ -71,11 +80,13 @@ public class Rent extends javax.swing.JFrame {
         jLabel5.setText("DESCRIPTION:");
 
         jButton1.setText("Cancel");
+        jButton1.addActionListener(controller);
         jButton1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {            }
         });
 
-        jButton2.setText("RENT");
+        jButton2.setText("RENT MOVIE");
+        jButton2.addActionListener(controller);
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -160,8 +171,38 @@ public class Rent extends javax.swing.JFrame {
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
+                
+        //populates the comboboxes
+    
 
         pack();
-    }// </editor-fold>                        
-              
+        
+        
+        
+            
+    }// </editor-fold>      
+    
+    public void populateJCB2() {
+        jComboBox2.setModel(new DefaultComboBoxModel<>(model.searchGenre()));
+    }
+       
+    ItemListener listener = (e) -> {
+        if (e.getStateChange() == ItemEvent.SELECTED) {
+            if (e.getSource() == jComboBox1) {
+                if (jComboBox1.getSelectedIndex() != 0) {
+                    selected = jComboBox1.getSelectedItem().toString();
+                    jComboBox2.removeAllItems();
+                    populateJCB2();
+
+                }
+            } else if (e.getSource() == jComboBox2) {
+                if (jComboBox2.getSelectedIndex() != 0) {
+                    selected = jComboBox2.getSelectedItem().toString();
+                    this.jButton2.setVisible(true);
+
+                }
+
+            }
+        }
+    };
 }

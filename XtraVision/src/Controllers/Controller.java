@@ -60,6 +60,10 @@ public class Controller implements ActionListener {
                returnMovie();
             }
             break;
+            case "Cancel": {
+               System.exit(0);
+            }
+            break;
         }
     }
 }

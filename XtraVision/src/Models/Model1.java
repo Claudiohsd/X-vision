@@ -27,7 +27,7 @@ public class Model1 {
             String dbServer = "jdbc:mysql://apontejaj.com:3306/Claudio_2019235?useSSL=false";
             String dbUser = "Claudio_2019235";
             String dbPassword = "2019235";
-            String query = "SELECT Genre, FROM Movie WHERE Available = 'yes';";
+            String query = "SELECT Genre FROM Movie WHERE Available = 'yes';";
 
             // Get a connection to the database
             Connection conn = DriverManager.getConnection(dbServer, dbUser, dbPassword);

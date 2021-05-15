@@ -12,30 +12,24 @@ package Objects;
 public class Order {
     
     //variables
-    private int UserID, Item;
+    private String CardNum, Item;
     private double Price;
     
     //constructor
-    public Order(int UserID, int Item, double Price) {
-        this.UserID = UserID;
+    public Order(String CardNum, String Item, double Price) {
+        this.CardNum = CardNum;
         this.Item = Item;
         this.Price = Price;
+        
     }    
 
     //getters and setters
-    public int getUserID() {
-        return UserID;
-    }
-
-    public void setUserID(int UserID) {
-        this.UserID = UserID;
-    }
-
-    public int getItem() {
+    
+    public String getItem() {
         return Item;
     }
 
-    public void setItem(int Item) {
+    public void setItem(String Item) {
         this.Item = Item;
     }
 
@@ -45,6 +39,14 @@ public class Order {
 
     public void setPrice(double Price) {
         this.Price = Price;
+    }
+
+    public String getCardNum() {
+        return CardNum;
+    }
+
+    public void setCardNum(String CardNum) {
+        this.CardNum = CardNum;
     }
     
     

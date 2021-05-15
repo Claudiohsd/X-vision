@@ -8,6 +8,7 @@ package Views;
 import Controllers.Controller;
 import Models.Model;
 import Objects.Movie;
+import Objects.Order;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
 import javax.swing.JFrame;
@@ -32,13 +33,15 @@ public class Checkout extends JFrame {
     private javax.swing.JTextField jTextField1;
     private javax.swing.JTextField jTextField2;
     private javax.swing.JTextField jTextField3;
-    private String selected;
+    private String selected,item;
+    private double price;
     // End of variables declaration     
     
     private Controller controller;
     private Model model;
     private Rent rent;
     private Movie movie;
+    private Order order;
 
     public Checkout(Controller controller) {
         
@@ -65,11 +68,13 @@ public class Checkout extends JFrame {
         jLabel4 = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
         jLabel1 = new javax.swing.JLabel();
+        item = movie.getMovieName();
+        price = movie.getPrice();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        jTextField1.setText(movie.getMovieName());
-        jTextField2.setText(String.valueOf(movie.getPrice()));
+        jTextField1.setText(item);
+        jTextField2.setText(String.valueOf(price));
 
         jLabel2.setText("Title");
 
@@ -114,7 +119,7 @@ public class Checkout extends JFrame {
         
         jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "select","1", "2", "3", "4" }));
 
-        jTextField3.setText("      0,00");
+        jTextField3.setText("         ");
 
         jLabel4.setText("Select quantity");
 
@@ -192,8 +197,18 @@ public class Checkout extends JFrame {
         );
 
         pack();
+        jButton2.setVisible(false);
+
     }
-    
+
+    public String getItem() {
+        return item;
+    }
+
+    public double getPrice() {
+        return price;
+    }
+   
     ItemListener listener = (e) -> {
         if (e.getStateChange() == ItemEvent.SELECTED) {
             if (e.getSource() == jComboBox1) {
@@ -203,6 +218,9 @@ public class Checkout extends JFrame {
                     int i = Integer.parseInt(selected);
                     
                     jTextField3.setText(String.valueOf(i * movie.getPrice())+0);
+                    price = Double.parseDouble(jTextField3.getText());
+                    jButton2.setVisible(true);
+                    
 
                 }
             } 

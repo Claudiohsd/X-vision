@@ -12,13 +12,13 @@ package Objects;
 public class User {
     
     //variables
-    private String UserID;
-    private String Email;
+    private String UserID = "";
+    private String Email = "";
     
     //constructor
-    public User(String UserID, String Email) {
+    public User(String UserID) {
         this.UserID = UserID;
-        this.Email = Email;
+    
     }
     
     //getters and setters

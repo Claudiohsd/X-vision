@@ -8,7 +8,11 @@ package Views;
 import Controllers.Controller;
 import Models.Model;
 import Objects.Movie;
+import javax.swing.InputVerifier;
+import javax.swing.JComponent;
 import javax.swing.JFrame;
+import javax.swing.JOptionPane;
+import javax.swing.text.JTextComponent;
 
 /**
  *
@@ -39,8 +43,11 @@ public class Payment extends JFrame {
     private Rent rent;
     private Movie movie;
     
-    public Payment() {
+    public Payment(Controller controller) {
+        
+        this.controller = controller;
         initComponents();
+        this.setVisible(true);
     }
 
     private void initComponents() {
@@ -63,9 +70,15 @@ public class Payment extends JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-//        jTextField1.addActionListener(controller);
-//
-//        jTextField2.addActionListener(controller);
+        jTextField1.setName("jTextField1");
+        jTextField1.setInputVerifier(new PassVerifier());
+        jTextField1.grabFocus();
+        jTextField2.setName("jTextField2");
+        jTextField2.setInputVerifier(new PassVerifier());
+        jTextField4.setName("jTextField4");
+        jTextField4.setInputVerifier(new PassVerifier());
+        jTextField5.setName("jTextField5");
+        jTextField5.setInputVerifier(new PassVerifier());
 
         jLabel2.setText("Enter card number");
 
@@ -128,7 +141,9 @@ public class Payment extends JFrame {
         );
 
         jButton1.setText("Cancel");
+        jButton1.setFocusable(false);
         jButton1.addActionListener(controller);
+        
 
         jButton2.setText("Pay");
         jButton2.addActionListener(controller);
@@ -211,7 +226,90 @@ public class Payment extends JFrame {
         );
 
         pack();
-    }// </editor-fold>                        
+    }
+    
+    public String getCard() {
+        return jTextField1.getText().toString();
+    }
+
+    
+    class PassVerifier extends InputVerifier {
+
+        public boolean verify(JComponent input) {
+            //it will make sure the fields get input from the user
+            final JTextComponent source = (JTextComponent) input;
+            String name = input.getName();
+            String s = "";
+
+            //switch to determine which field has the focus
+            switch (name) {
+                case "jTextField1": {
+                    s = jTextField1.getText();
+                }
+                break;
+                case "jTextField2": {
+                    s = jTextField2.getText();
+                }
+                break;
+                case "jTextField4": {
+                    s = jTextField4.getText();
+                }
+                break;
+                case "jTextField5": {
+                    s = jTextField5.getText();
+                }
+                
+                default:
+                    System.out.println(name);
+            }
+
+            boolean valid = s.isBlank();
+            // makes sure the user enters a number
+            if (name == jTextField1.getName() && !jTextField1.getText().matches("^(?:(?<visa>4[0-9]{12}(?:[0-9]{3})?)|" +
+        "(?<mastercard>5[1-5][0-9]{14})|" +
+        "(?<discover>6(?:011|5[0-9]{2})[0-9]{12})|" +
+        "(?<amex>3[47][0-9]{13})|" +
+        "(?<diners>3(?:0[0-5]|[68][0-9])?[0-9]{11})|" +
+        "(?<jcb>(?:2131|1800|35[0-9]{3})[0-9]{11}))$")) {
+                JOptionPane.showMessageDialog(source, "field cannot be empty and it should be a valid credit card.",
+                        "Input error", JOptionPane.ERROR_MESSAGE);
+                return false;
+            } else if (name == jTextField2.getName() && !jTextField2.getText().matches("^[0-9]{3}$")) {
+                JOptionPane.showMessageDialog(source, "field cannot be empty and it should be a number.",
+                        "Input error", JOptionPane.ERROR_MESSAGE);
+                return false;
+            }
+            else if (name == jTextField4.getName() && !jTextField4.getText().matches("^[0-9]{4}$")) {
+                JOptionPane.showMessageDialog(source, "field cannot be empty and it should be a number.",
+                        "Input error", JOptionPane.ERROR_MESSAGE);
+                return false;
+                //makes sure the user enters an email
+            }else if (name == jTextField5.getName()) {
+                
+                if(! jTextField5.getName().isBlank()){
+                String regex = "^[\\w-_\\.+]*[\\w-_\\.]\\@([\\w]+\\.)+[\\w]+[\\w]$";
+                if (valid = jTextField5.getText().matches(regex)) {
+                    valid = false;
+
+                } else {
+                    JOptionPane.showMessageDialog(source, "make sure you enter a valid e_mail.",
+                            "Input error", JOptionPane.ERROR_MESSAGE);
+
+                    return false;
+                }
+                }
+            }
+            //makes sure the field is not empty
+            if (valid) {
+                JOptionPane.showMessageDialog(source, "field cannot be empty.",
+                        "Input error", JOptionPane.ERROR_MESSAGE);
+                return false;
+            } else {
+                return true;
+            }
+        }
+
+    }
 
     
 

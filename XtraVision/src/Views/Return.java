@@ -1,12 +1,18 @@
 package Views;
 
 import Controllers.Controller;
+import Models.Model;
+import javax.swing.InputVerifier;
+import javax.swing.JComponent;
+import javax.swing.JFrame;
+import javax.swing.JOptionPane;
+import javax.swing.text.JTextComponent;
 
 /**
  *
  * @author claudiodionisio
  */
-public class Return extends javax.swing.JFrame {
+public class Return extends JFrame {
     
     // Variables declaration - do not modify                     
     private javax.swing.JButton jButton1;
@@ -17,8 +23,9 @@ public class Return extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel3;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
-    private java.awt.TextField textField1;
-    // End of variables declaration  
+    private javax.swing.JTextField textField1;
+    // End of variables declaration 
+    private Model model = new Model();
     
     private  Controller controller;
     /**
@@ -35,7 +42,7 @@ public class Return extends javax.swing.JFrame {
 
         jPanel1 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
-        textField1 = new java.awt.TextField();
+        textField1 = new javax.swing.JTextField();
         jButton1 = new javax.swing.JButton();
         jButton2 = new javax.swing.JButton();
         jPanel2 = new javax.swing.JPanel();
@@ -46,20 +53,22 @@ public class Return extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
         jLabel1.setFont(new java.awt.Font("Lucida Grande", 0, 12)); // NOI18N
-        jLabel1.setText("Verify that the case is properly closed and type in the product code in the area below.");
+        jLabel1.setText("Verify that the case is properly closed and type in the cardNumber in the area below.");
 
-        textField1.setText("Enter bar code");
-        textField1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                textField1ActionPerformed(evt);
-            }
-        });
+        textField1.setText("");
+        textField1.setName("textField1");
+        textField1.setInputVerifier(new PassVerifier());
+        
 
         jButton1.setText("Cancel");
         jButton1.addActionListener(controller);
 
         jButton2.setText("Confirm");
-        jButton2.addActionListener(controller);
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
+            }
+        });        
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -93,11 +102,12 @@ public class Return extends javax.swing.JFrame {
                     .addComponent(jButton2)))
         );
 
-        jLabel2.setText("Confirmation details and price paid ");
+        
 
         jButton3.setText("Finish");
         jButton3.addActionListener(controller);
-
+        
+        jLabel2.setText("text");  
         jLabel3.setText("Insert the case and press finish");
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
@@ -145,18 +155,61 @@ public class Return extends javax.swing.JFrame {
                 .addGap(0, 0, Short.MAX_VALUE))
         );
 
+        
         pack();
+        
+        jPanel2.setVisible(false);
     }// </editor-fold>                        
-
-    private void textField1ActionPerformed(java.awt.event.ActionEvent evt) {                                           
-        // TODO add your handling code here:
-    }                                          
-
+                                         
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {                                         
-        // TODO add your handling code here:
-    }                                        
+        jLabel2.setText(model.orderDetails(textField1.getText()));       
+        jPanel2.setVisible(true);
+    }    
+    
+    public String getCard() {
+        return textField1.getText().toString();
+    }
 
-//    }
+class PassVerifier extends InputVerifier {
 
+        public boolean verify(JComponent input) {
+            //it will make sure the fields get input from the user
+            final JTextComponent source = (JTextComponent) input;
+            String name = input.getName();
+            String s = "";
+
+            //switch to determine which field has the focus
+            switch (name) {
+                case "textField1": {
+                    s = textField1.getText();
+                }
+                break;
+             
+                default:
+                    System.out.println(name);
+            }
+
+            boolean valid = s.isBlank();
+            // makes sure the user enters a number
+            if (name == textField1.getName() && !textField1.getText().matches("^(?:(?<visa>4[0-9]{12}(?:[0-9]{3})?)|" +
+        "(?<mastercard>5[1-5][0-9]{14})|" +
+        "(?<discover>6(?:011|5[0-9]{2})[0-9]{12})|" +
+        "(?<amex>3[47][0-9]{13})|" +
+        "(?<diners>3(?:0[0-5]|[68][0-9])?[0-9]{11})|" +
+        "(?<jcb>(?:2131|1800|35[0-9]{3})[0-9]{11}))$")) {
+                JOptionPane.showMessageDialog(source, "field cannot be empty and it should be a valid credit card.",
+                        "Input error", JOptionPane.ERROR_MESSAGE);
+                return false;
+            }  
+            //makes sure the field is not empty
+            if (valid) {
+                JOptionPane.showMessageDialog(source, "field cannot be empty.",
+                        "Input error", JOptionPane.ERROR_MESSAGE);
+                return false;
+            } else {
+                return true;
+            }
+        }
+    }
                      
 }
